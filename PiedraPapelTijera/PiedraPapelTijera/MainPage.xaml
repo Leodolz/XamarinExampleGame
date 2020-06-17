@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:PiedraPapelTijera"
+             x:Class="PiedraPapelTijera.MainPage">
+
+    <StackLayout Margin="10,20,10,20">
+        <Label Text="Rock, Scissors, Paper" FontSize="30" HorizontalOptions="Center"/>
+        <Label Margin="0,30,0,0" Text="Pick one:" FontSize="20" HorizontalOptions="Center"/>
+        <Picker Margin="30,0,30,0"
+                Title="Item"
+                SelectedIndexChanged="Picker_SelectedIndexChanged">
+            <Picker.Items>
+                <x:String>Rock</x:String>
+                <x:String>Scissors</x:String>
+                <x:String>Paper</x:String>
+            </Picker.Items>
+            
+        </Picker>
+        <Button x:Name="PlayButton" Margin="30,20,30,0" Text="Play" Clicked="playClicked"/>
+        <StackLayout x:Name="cpuResultLayout" IsVisible="False">
+            <Label Margin="0,10,0,0" Text="Computer selected:" FontSize="20" HorizontalOptions="Center"/>
+            <Label x:Name="ComputerSelectionLabel" Margin="0,10,0,0" Text="Scissors" FontSize="20" HorizontalOptions="Center"/>
+            <Label x:Name="FinalResultLabel" Margin="0,10,0,0" Text="YOU WIN!" FontSize="20" HorizontalOptions="Center"/>
+        </StackLayout>
+        <StackLayout>
+            <Label Margin="0,20,0,0" Text="TOTAL SCORE:" FontSize="20" HorizontalOptions="Center"/>
+            <Label x:Name="ComputerScore" Margin="0,10,0,0" Text="0" FontSize="30" HorizontalOptions="Center"/>
+        </StackLayout>
+        <Button x:Name="PlayAgainButton"  Margin="30,20,30,0" Text="PLAY AGAIN" Clicked="playAgainClicked" IsEnabled="False"/>
+        <Button x:Name="ClearScore" IsVisible="True" Margin="30,0,30,0" Clicked="clearScoreClicked" Text="CLEAR SCORE"/>
+    </StackLayout>
+
+</ContentPage>
