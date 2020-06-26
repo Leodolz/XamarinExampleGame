@@ -18,7 +18,7 @@
                                         <Label HorizontalOptions="Start" Margin="30,0,0,0" FontSize="20" TextColor="Black"  Text="{Binding Playing}"/>
 
                                     </StackLayout>
-                                    <Button  Text="Duel" HorizontalOptions="End" WidthRequest="100"/>
+                                    <Button Clicked="DuelClicked"  Text="Duel" HorizontalOptions="End" WidthRequest="100"/>
                                 </StackLayout>
                             </ContentView>
                             <!--

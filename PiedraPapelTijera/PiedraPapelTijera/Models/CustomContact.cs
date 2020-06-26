@@ -11,7 +11,7 @@ namespace PiedraPapelTijera.Models
         public CustomContact(Plugin.ContactService.Shared.Contact contact, bool playing, ICommand TapCommand)
         {
             Name = contact.Name;
-            Number = contact.Number;
+            Number = contact.Number!=null?contact.Number.StartsWith("+")?contact.Number:Globals.PhoneCountryCode.PhoneGlobal+contact.Number:"";
             Playing = playing;
             this.TapCommand = TapCommand;
         }

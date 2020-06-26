@@ -36,7 +36,9 @@ namespace PiedraPapelTijera
         }
         private void DuelClicked(object sender, EventArgs e)
         {
-
+            Button button = (Button)sender;
+            CustomContact parent = (CustomContact)button.BindingContext;
+            DisplayAlert("Test", "You challenged " + parent.Name + " of number " + parent.Number.Replace(" ",""), "OK");
         }
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {

@@ -26,7 +26,7 @@ namespace PiedraPapelTijera
             {
                 new CustomMenuItem{ Title = "View Contacts", TapCommand= goToDetailCommand},
                 new CustomMenuItem{ Title= "Play Game", TapCommand = new Command(() => { Navigation.PushAsync(new MainPage()); })},
-                new CustomMenuItem {Title= "Show me my number!", TapCommand = new Command(()=>{ DisplayAlert("Your number","Your number is... "+GetNumber(),"OK"); }) },
+                new CustomMenuItem {Title= "Show me my number!", TapCommand = new Command(()=>{ string countryCode = GetPhoneCountryCode(); DisplayAlert("Your number","Your number is... "+countryCode,"OK"); Globals.PhoneCountryCode.PhoneGlobal = countryCode; }) },
                 new CustomMenuItem{ Title = "Register", TapCommand= new Command(()=>SetupPopupRegistration())},
             };
 
@@ -38,7 +38,7 @@ namespace PiedraPapelTijera
             MyListView.IsVisible = false;
             PopupRegister.IsVisible = true;
             PopupRegister.IsEnabled = true;
-            CountryNumber.Text = GetNumber();
+            CountryNumber.Text = GetPhoneCountryCode();
         }
 
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -52,7 +52,7 @@ namespace PiedraPapelTijera
             //Deselect Item
             ((ListView)sender).SelectedItem = null;
         }
-        private string GetNumber()
+        private string GetPhoneCountryCode()
         {
             var deviceInfo = Xamarin.Forms.DependencyService.Get<Interfaces.IDeviceInfo>();
             return deviceInfo.GetPhoneNumber();
