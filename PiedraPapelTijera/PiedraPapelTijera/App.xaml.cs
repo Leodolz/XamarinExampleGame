@@ -11,7 +11,7 @@ namespace PiedraPapelTijera
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage( new MainPage());
+            MainPage = new NavigationPage( new MainMenuPage());
         }
 
         protected override void OnStart()
@@ -23,7 +23,6 @@ namespace PiedraPapelTijera
         {
             // Handle when your app sleeps
         }
-
         protected override void OnResume()
         {
             // Handle when your app resumes

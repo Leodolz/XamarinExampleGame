@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PiedraPapelTijera.Constants;
+using PiedraPapelTijera.Helpers;
+using PiedraPapelTijera.Views;
 using Xamarin.Forms;
 
 namespace PiedraPapelTijera
@@ -14,6 +17,7 @@ namespace PiedraPapelTijera
         public MainPage()
         {
             InitializeComponent();
+            
         }
 
         private void Picker_SelectedIndexChanged(object sender, EventArgs e)
@@ -29,26 +33,31 @@ namespace PiedraPapelTijera
             cpuResultLayout.IsVisible = calculateResult;
         }
 
-        private void playClicked(object sender, EventArgs e)
+        private void PlayClicked(object sender, EventArgs e)
         {
             SetLayoutVisibles(true);
             RockPaperScissorsHelper rockPaperScissorsHelper = new RockPaperScissorsHelper();
             string cpuPick = rockPaperScissorsHelper.GenerateItem();
             ComputerSelectionLabel.Text = cpuPick;
-            int result = rockPaperScissorsHelper.calculateResult(selection, cpuPick);
-            FinalResultLabel.Text = Constants.GameResult[result];
+            int result = rockPaperScissorsHelper.CalculateResult(selection, cpuPick);
+            FinalResultLabel.Text = GameConstants.GameResult[result];
             totalScore = result == 1 ? totalScore + 1 : totalScore;
             ComputerScore.Text = totalScore.ToString();
         }
-        private void playAgainClicked(object sender, EventArgs e)
+        private void PlayAgainClicked(object sender, EventArgs e)
         {
             SetLayoutVisibles(false);
         }
-        private void clearScoreClicked(object sender, EventArgs e)
+        private void ClearScoreClicked(object sender, EventArgs e)
         {
             totalScore = 0;
             SetLayoutVisibles(false);
             ComputerScore.Text = totalScore.ToString();
+        }
+        private void MessagesClicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new ChatPage("Server","1234567"));
+         
         }
     }
 }

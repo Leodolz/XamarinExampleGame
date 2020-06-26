@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PiedraPapelTijera
+namespace PiedraPapelTijera.Constants
 {
-    public static class Constants
+    public static class GameConstants
     {
         public const string Rock = "Rock";
         public const string Scissors = "Scissors";

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PiedraPapelTijera.ViewContactsPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Contacts" FontSize="20"/>
+            <ListView x:Name="HomeListView" HasUnevenRows="True" ItemTapped="Handle_ItemTapped">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ContentView Padding="10">
+                                <StackLayout Orientation="Horizontal">
+                                    
+                                    <StackLayout HorizontalOptions="StartAndExpand">
+                                        <Label HorizontalOptions="Start" Margin="30,0,0,0" FontSize="20" TextColor="Black"  Text="{Binding Name}"/>
+                                        <Label HorizontalOptions="Start" Margin="30,0,0,0" FontSize="20" TextColor="Black"  Text="{Binding Number}"/>
+                                        <Label HorizontalOptions="Start" Margin="30,0,0,0" FontSize="20" TextColor="Black"  Text="{Binding Playing}"/>
+
+                                    </StackLayout>
+                                    <Button  Text="Duel" HorizontalOptions="End" WidthRequest="100"/>
+                                </StackLayout>
+                            </ContentView>
+                            <!--
+                            <ViewCell.ContextActions>
+                                <MenuItem Text="Go" Clicked="MenuGoToPage"/>
+                                <MenuItem Text="Delete" Clicked="DeletePage"/>
+                            </ViewCell.ContextActions>
+                            -->
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
