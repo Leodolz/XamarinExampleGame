@@ -6,8 +6,11 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
+using Microsoft.AspNetCore.SignalR.Client;
+
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xamarin.Essentials;
 
 namespace PiedraPapelTijera
 {
@@ -15,12 +18,11 @@ namespace PiedraPapelTijera
     public partial class MainMenuPage : ContentPage
     {
         public List<CustomMenuItem> Items { get; set; }
-        private string userName = "";
 
         public MainMenuPage()
         {
             InitializeComponent();
-
+            LoginToGame();
             var goToDetailCommand = new Command(() => { Navigation.PushAsync(new ViewContactsPage()); });
             Items = new List<CustomMenuItem>
             {
@@ -32,7 +34,28 @@ namespace PiedraPapelTijera
 
             MyListView.ItemsSource = Items;
         }
-        private void SetupPopupRegistration()
+        private async void LoginToGame()
+        {
+            await Services.ChatClient.StartConnection(Constants.AppConstants.appUserName);
+            Services.ChatClient.AddGameRequestListener(ShowChallengedScreen);
+        }
+        private  void ShowChallengedScreen(string challengedBy, int noRounds)
+        {
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                ShowChallengedScreenMainThread(challengedBy,noRounds);
+               
+            });
+           
+            /*string message = accept ? "accepted" : "rejected";
+            await DisplayAlert("Acceptance", "You just " + message + " the duel", "OK");*/
+        }
+        private async void ShowChallengedScreenMainThread(string challengedBy, int noRounds)
+        {
+            bool accepted = await DisplayAlert("Challenged!", "You were challenged by: " + challengedBy + " for " + noRounds + " rounds.", "Accept", "Cancel");
+            if (accepted) await Navigation.PushAsync(new MainPage(challengedBy,noRounds));
+        }
+        public void SetupPopupRegistration()
         {
             MainPageLayout.BackgroundColor = Color.LightGray;
             MyListView.IsVisible = false;
@@ -69,8 +92,8 @@ namespace PiedraPapelTijera
         private void ButtonOk_Clicked(object sender, EventArgs e)
         {
             DisappearPopup();
-            userName = CountryNumber.Text+PhoneEntry.Text;
-            DisplayAlert("Registration", "You entered username: "+userName, "OK");
+            Constants.AppConstants.appUserName = CountryNumber.Text+PhoneEntry.Text;
+            DisplayAlert("Registration", "You entered username: "+ Constants.AppConstants.appUserName, "OK");
         }
 
         private void ButtonCancel_Clicked(object sender, EventArgs e)

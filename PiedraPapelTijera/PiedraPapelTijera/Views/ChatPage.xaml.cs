@@ -14,13 +14,12 @@ namespace PiedraPapelTijera.Views
 	public partial class ChatPage : ContentPage
 	{
         private static ChatPageViewModel chatContext;
-        private static string userNamePhone = "+59179783096";
 
         public ChatPage (string receiverName, string receiverPhone)
 		{
 			InitializeComponent ();
-            chatContext = new ChatPageViewModel(receiverName,receiverPhone, userNamePhone);
-            Services.ChatClient.StartConnection(userNamePhone, OnReceiveMessage);
+            chatContext = new ChatPageViewModel(receiverName,receiverPhone, Constants.AppConstants.appUserName);
+            Services.ChatClient.AddMessageListener(OnReceiveMessage);
             BindingContext = chatContext;
             chatContext.Messages.Insert(0, new Models.Message { Text = "This is a test from constructor", Sender = "Me" });
         }
@@ -28,13 +27,13 @@ namespace PiedraPapelTijera.Views
         {
             chatContext.Messages.Insert(0,new Models.Message { Text=message, Sender=user});
         }
-
+        /*
         protected override bool OnBackButtonPressed()
         {
             base.OnBackButtonPressed();
             Services.ChatClient.Disconnect(userNamePhone);
             return false;
-        }
+        }*/
         public void ScrollTap(object sender, EventArgs e)
         {
             lock (new object())

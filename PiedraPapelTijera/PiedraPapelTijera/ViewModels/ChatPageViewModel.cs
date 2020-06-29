@@ -48,7 +48,7 @@ namespace PiedraPapelTijera.ViewModels
             Messages.Insert(0, new Message() { Text = "Oh My God!" });
             Messages.Insert(0, new Message() { Text = " No Problem" });
             Messages.Insert(0, new Message() { Text = "Hugs and Kisses" });
-            ReceiverPhone = receiverPhone.Trim();
+            ReceiverPhone = receiverPhone.Replace(" ","").Trim();
             ReceiverName = receiverName;
             MessageAppearingCommand = new Command<Message>(OnMessageAppearing);
             MessageDisappearingCommand = new Command<Message>(OnMessageDisappearing);
