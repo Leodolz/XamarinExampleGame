@@ -16,12 +16,14 @@ namespace PiedraPapelTijera
     {
         private string selection = "";
         private int totalScore = 0;
-        private int counter = 30;
+        private int rivalsPick = 0;
         private string againstPlayer = null;
         private bool[] matchEnded = new bool[2];
         private int numberRounds = 0;
         private CancellationTokenSource cancellation;
         RockPaperScissorsHelper rockPaperScissorsHelper = new RockPaperScissorsHelper();
+        
+        //Constructors
         public MainPage()
         {
             InitializeComponent();
@@ -36,34 +38,36 @@ namespace PiedraPapelTijera
             cancellation = new CancellationTokenSource();
             Services.ChatClient.AddGameTurnListener(RivalSelected);
             numberRounds = noRounds;
-            
             SetTimer();
         }
 
+        //Timers
         private void SetTimer()
         {
             CancellationTokenSource cts = cancellation;
+            int gCounter = 5;
+            bool cancelled = false;
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
                 if (cts.IsCancellationRequested)
                 {
-                    
-                    return false;
-                    
+                    cancelled = true;
                 }
-                counter--;
+                gCounter--;
 
-                if (counter < 0)
+                if (gCounter < 0)
                 {
-                    counter = 30;
-                    selection = rockPaperScissorsHelper.GenerateItem();
-                    PlayersSelection.SelectedItem = selection;
-                    PlayAgainstPlayer();
+                    if (!cancelled)
+                    {
+                        selection = rockPaperScissorsHelper.GenerateItem();
+                        PlayersSelection.SelectedItem = selection;
+                        PlayAgainstPlayer();
+                    }
                     return false;
                 }
                 else
                 {
-                    AwaitTimer.Text = counter.ToString();
+                    AwaitTimer.Text = gCounter.ToString();
                     return true;
                 }
                 
@@ -71,38 +75,47 @@ namespace PiedraPapelTijera
         }
         private void StartNextMatchTimer()
         {
-            counter = 5;
+            int nextMatch = 3;
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
-                counter--;
-                if (counter < 0)
+                NextMatchTimer.Text = nextMatch.ToString();
+                nextMatch--;
+                if (nextMatch < 0)
                 {
                     SetVisiblesMultiPlayer(false);
-
+                    SetTimer();
                     return false;
                 }
                 else
                 {
-                    NextMatchTimer.Text = counter.ToString();
                     return true;
                 }
             });
         }
+        //Receiving Routine
 
         private void RivalSelected (int rivalsPick)
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                //If match ended
+                matchEnded[1] = true;
+                this.rivalsPick = rivalsPick;
+                CheckIfEnded();
+            });
+        }
+
+        private void CheckIfEnded()
+        {
+            if (matchEnded[0] & matchEnded[1])
+            {
                 CalculateResult(GameConstants.AvailablePicksToReceive[rivalsPick]);
                 SetVisiblesMultiPlayer(true);
-                
-            });
-            
+            }
         }
+
         private void SetVisiblesMultiPlayer(bool matchEnd)
         {
-            PlayButton.IsEnabled = matchEnd;
+            PlayButton.IsEnabled = !matchEnd;
             cpuResultLayout.IsVisible = matchEnd;
             AwaitStack.IsVisible = !matchEnd;
             NextMatchLayout.IsVisible = matchEnd;
@@ -121,8 +134,15 @@ namespace PiedraPapelTijera
             PlayAgainButton.IsEnabled = calculateResult;
             cpuResultLayout.IsVisible = calculateResult;
         }
+        private void ClearGame()
+        {
+            matchEnded[0] = false;
+            matchEnded[1] = false;
+            rivalsPick = 0;
+        }
         private void CalculateResult(string rivalsPick)
         {
+            ClearGame();
             ComputerSelectionLabel.Text = rivalsPick;
             int result = rockPaperScissorsHelper.CalculateResult(selection, rivalsPick);
             FinalResultLabel.Text = GameConstants.GameResult[result];
@@ -138,10 +158,12 @@ namespace PiedraPapelTijera
         }
         private void PlayAgainstPlayer()
         {
+            matchEnded[0] = true;
             PlayButton.IsEnabled = false;
             Services.ChatClient.SendMyPick(GameConstants.AvailablePicksToSend[selection], againstPlayer);
             AwaitStack.IsVisible = true;
             cancellation.Cancel();
+            CheckIfEnded();
         }
 
         
