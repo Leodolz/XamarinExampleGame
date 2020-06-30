@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Xamarin.Forms;
 
 namespace PiedraPapelTijera.Constants
 {
@@ -14,6 +15,12 @@ namespace PiedraPapelTijera.Constants
             {0,"ITS A TIE"},
             {-1,"YOU LOOSE"},
 
+        };
+
+        public static Dictionary<int, Color> GameResultColor = new Dictionary<int, Color> {
+            {1, Color.Blue},
+            {0, Color.Black},
+            {-1, Color.Red},
         };
         public static Dictionary<int, string> AvailablePicksToReceive = new Dictionary<int, string>
         {

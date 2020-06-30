@@ -4,8 +4,9 @@ using System.Text;
 
 namespace PiedraPapelTijera.Models
 {
-    public class GameChallengeNotification
+    public class CustomGameItem
     {
-
+        public string Title { get; set; }
+        public string ImageSource { get; set; }
     }
 }

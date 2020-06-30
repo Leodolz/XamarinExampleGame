@@ -8,27 +8,37 @@
         <StackLayout  Orientation="Horizontal">
             <Label Text="Round:"/>
             <Label x:Name="RoundLabel" Text="1"/>
-            <Label Margin="-50,0,0,0" Text="Playing Against:" FontSize="20" HorizontalOptions="CenterAndExpand" FontAttributes="Bold"/>
-            
+            <Label Margin="0,0,0,0" Text="Playing Against:" FontSize="20" HorizontalOptions="CenterAndExpand" FontAttributes="Bold"/>
+            <Button Clicked="ButtonLeave_Clicked" Margin="0,-10,0,0" Padding="0,0,0,0" WidthRequest="60" HorizontalOptions="End" Text="Leave"/>
         </StackLayout>
         <Label x:Name="AgainstLabel" Text="Computer" FontSize="20" HorizontalOptions="CenterAndExpand"/>
-        <Label Margin="0,20,0,0" Text="Pick one:" FontSize="20" HorizontalOptions="Center"/>
-        <Picker
-            x:Name="PlayersSelection"
-            Margin="30,0,30,0"
-                Title="Item"
-                SelectedIndexChanged="Picker_SelectedIndexChanged">
-            <Picker.Items>
-                <x:String>Rock</x:String> 
-                <x:String>Scissors</x:String>
-                <x:String>Paper</x:String>
-            </Picker.Items>
+        <StackLayout Margin="0,0,0,0" Orientation="Horizontal" HorizontalOptions="Center">
+            <Label  Text="Picked:" FontSize="20" HorizontalOptions="Center"/>
+            <Label x:Name="PlayersPick" Text="(Choose one)" FontSize="20" HorizontalOptions="Start"/>
             
-        </Picker>
-        <Button x:Name="PlayButton" Margin="30,20,30,0" Text="Play" Clicked="PlayClicked"/>
-        <StackLayout x:Name="AwaitStack">
-            <Label HorizontalOptions="CenterAndExpand" Text="Waiting for rival..." FontSize="20"/>
-            <Label x:Name="AwaitTimer" HorizontalOptions="CenterAndExpand" Text="A timer Goes here" FontSize="20"/>
+        </StackLayout>
+        
+        <ListView x:Name="MyListView" 
+            ItemsSource="{Binding Items}"
+            ItemTapped="Handle_ItemTapped"
+            Margin="60,0,40,0"
+            CachingStrategy="RetainElement"
+                  RowHeight="70">
+            <ListView.ItemTemplate>
+                <DataTemplate > 
+                    <ViewCell> 
+                        <StackLayout VerticalOptions="Center" Orientation="Horizontal" >
+                            <Label  FontSize="23" Text="{Binding Title}"  />
+                            <Image HorizontalOptions="Start" Margin="70,0,0,0" Source="{Binding ImageSource}" HeightRequest="30"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <StackLayout VerticalOptions="Start" Margin="0,0,0,0" x:Name="AwaitStack">
+            <Label HorizontalOptions="Center" Text="Waiting for rival..." FontSize="20"/>
+            <Label x:Name="AwaitTimer" HorizontalOptions="Center" Text="A timer Goes here" FontSize="20"/>
         </StackLayout>
         <StackLayout x:Name="cpuResultLayout" IsVisible="False">
             <Label Margin="0,10,0,0" Text="Rival selected:" FontSize="20" HorizontalOptions="Center"/>

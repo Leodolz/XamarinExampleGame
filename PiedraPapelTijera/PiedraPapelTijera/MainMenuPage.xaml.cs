@@ -53,7 +53,7 @@ namespace PiedraPapelTijera
         private async void ShowChallengedScreenMainThread(string challengedBy, int noRounds)
         {
             bool accepted = await DisplayAlert("Challenged!", "You were challenged by: " + challengedBy + " for " + noRounds + " rounds.", "Accept", "Cancel");
-            if (accepted) await Navigation.PushAsync(new MainPage(challengedBy,noRounds));
+            if (accepted) await Navigation.PushAsync(new MainPage(challengedBy));
         }
         public void SetupPopupRegistration()
         {
