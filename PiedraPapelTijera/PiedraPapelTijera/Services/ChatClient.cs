@@ -24,8 +24,7 @@ namespace PiedraPapelTijera.Services
        
         public static async Task StartConnection(string userName)
         {
-            if (mainConnection != null)
-                return;
+            
             mainConnection = new HubConnectionBuilder().WithUrl(Constants.ChatConstants.serverUrl).Build();
             await mainConnection.StartAsync();
             await mainConnection.InvokeAsync("NewConnectionAdded", userName);
@@ -61,6 +60,10 @@ namespace PiedraPapelTijera.Services
         {
             return await mainConnection.InvokeAsync<int[]>("ConsultContactsStates",contacts);
         }
+        public static async void SendChallengeUser(int nRounds, string challengedUser, string ownUsername)
+        {
+            await mainConnection.InvokeAsync("PlayWithUserRequest", nRounds, challengedUser, ownUsername);
+        }
 
 
         //Listeners
@@ -79,10 +82,10 @@ namespace PiedraPapelTijera.Services
             if (mainConnection != null)
                 mainConnection.On<int>("ReceiveRivalsPick", (userTurn) => receiveGameTurn(userTurn));
         }
-        public static void AddGameCodeListener(Action<int,int> receiveGameCode)
+        public static void AddGameCodeListener(Action<int,int,string> receiveGameCode)
         {
             if (mainConnection != null)
-                mainConnection.On<int, int>("ReceiveGameCode", (response,rounds)=> receiveGameCode(response,rounds);
+                mainConnection.On<int, int,string>("ReceiveGameCode", (response,rounds, against)=> receiveGameCode(response,rounds,against));
         }
         public static void AddGameDisconnectListener(Action receiveDisconnectNotification)
         {

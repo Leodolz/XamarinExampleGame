@@ -27,27 +27,6 @@ namespace PiedraPapelTijera.ViewModels
 
         public ChatPageViewModel(string receiverName, string receiverPhone, string userNamePhone)
         {
-            Messages.Insert(0, new Message() { Text = "Hi" });
-            Messages.Insert(0, new Message() { Text = "How are you?", Reciever = ChatConstants.defaultReciever });
-            Messages.Insert(0, new Message() { Text = "What's new?" });
-            Messages.Insert(0, new Message() { Text = "How is your family", Reciever = ChatConstants.defaultReciever });
-            Messages.Insert(0, new Message() { Text = "How is your dog?", Reciever = ChatConstants.defaultReciever });
-            Messages.Insert(0, new Message() { Text = "How is your cat?", Reciever = ChatConstants.defaultReciever });
-            Messages.Insert(0, new Message() { Text = "How is your sister?" });
-            Messages.Insert(0, new Message() { Text = "When we are going to meet?" });
-            Messages.Insert(0, new Message() { Text = "I want to buy a laptop" });
-            Messages.Insert(0, new Message() { Text = "Where I can find a good one?" });
-            Messages.Insert(0, new Message() { Text = "Also I'm testing this chat" });
-            Messages.Insert(0, new Message() { Text = "Oh My God!" });
-            Messages.Insert(0, new Message() { Text = " No Problem", Reciever = ChatConstants.defaultReciever });
-            Messages.Insert(0, new Message() { Text = "Hugs and Kisses", Reciever = ChatConstants.defaultReciever });
-            Messages.Insert(0, new Message() { Text = "When we are going to meet?" });
-            Messages.Insert(0, new Message() { Text = "I want to buy a laptop" });
-            Messages.Insert(0, new Message() { Text = "Where I can find a good one?" });
-            Messages.Insert(0, new Message() { Text = "Also I'm testing this chat" });
-            Messages.Insert(0, new Message() { Text = "Oh My God!" });
-            Messages.Insert(0, new Message() { Text = " No Problem" });
-            Messages.Insert(0, new Message() { Text = "Hugs and Kisses" });
             ReceiverPhone = receiverPhone.Replace(" ","").Trim();
             ReceiverName = receiverName;
             MessageAppearingCommand = new Command<Message>(OnMessageAppearing);
@@ -59,9 +38,6 @@ namespace PiedraPapelTijera.ViewModels
                 {
                     Messages.Insert(0, new Message() { Text = TextToSend, Reciever = ChatConstants.defaultReciever });
                     Services.ChatClient.SendPersonalMessage(userNamePhone, TextToSend,ReceiverPhone);
-                    Console.WriteLine("------------------------------------------------------");
-                    Console.WriteLine("Sent message to: " + ReceiverPhone);
-                    Console.WriteLine("------------------------------------------------------");
                     TextToSend = string.Empty;
                 }
 

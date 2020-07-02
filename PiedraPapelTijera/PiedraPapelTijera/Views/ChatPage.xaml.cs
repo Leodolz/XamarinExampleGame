@@ -14,18 +14,21 @@ namespace PiedraPapelTijera.Views
 	public partial class ChatPage : ContentPage
 	{
         private static ChatPageViewModel chatContext;
-
+        private string receiverPhone = "";
         public ChatPage (string receiverName, string receiverPhone)
 		{
 			InitializeComponent ();
+            this.receiverPhone = receiverPhone;
             chatContext = new ChatPageViewModel(receiverName,receiverPhone, Constants.AppConstants.appUserName);
             Services.ChatClient.AddMessageListener(OnReceiveMessage);
             BindingContext = chatContext;
-            chatContext.Messages.Insert(0, new Models.Message { Text = "This is a test from constructor", Sender = "Me" });
+            
         }
-        private static void OnReceiveMessage(string user, string message)
+        private void OnReceiveMessage(string user, string message)
         {
-            chatContext.Messages.Insert(0,new Models.Message { Text=message, Sender=user});
+            if (receiverPhone.Replace(" ", "").Trim() == user.Replace(" ", "").Trim())
+                chatContext.Messages.Insert(0, new Models.Message { Text = message, Sender = user });
+            else Console.WriteLine("---------------------Rejected!");
         }
         /*
         protected override bool OnBackButtonPressed()

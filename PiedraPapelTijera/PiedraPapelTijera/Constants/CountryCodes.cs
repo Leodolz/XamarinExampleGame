@@ -6,7 +6,7 @@ namespace PiedraPapelTijera.Constants
 {
     public class CountryCodes
     {
-        public static Dictionary<string, string> countryCodesDict = new Dictionary<string, string>
+        public static Dictionary<string, string> countryCodesDict { get; set; } = new Dictionary<string, string>
         {
             { "AC", "+247"},
             { "AD", "+376" },

@@ -173,6 +173,7 @@ namespace PiedraPapelTijera
         {
             PlayAgainButton.IsEnabled = calculateResult;
             cpuResultLayout.IsVisible = calculateResult;
+            MyListView.IsVisible = !calculateResult;
         }
         private void ClearGame()
         {
@@ -231,7 +232,8 @@ namespace PiedraPapelTijera
 
         private async void ButtonLeave_Clicked(object sender, EventArgs e)
         {
-            Services.ChatClient.LeaveGame(againstPlayer);
+            if(againstPlayer!=null)
+                Services.ChatClient.LeaveGame(againstPlayer);
             await Navigation.PushAsync(await Navigation.PopAsync());
         }
 

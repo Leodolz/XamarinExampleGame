@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PiedraPapelTijera.MainTabbedMenu">
+  <!--Pages can be added as references or inline-->
+    <ContentPage Title="Main"  x:Name="MainPageLayout" >
+        <StackLayout>
+            <ListView x:Name="MyListView"
+            ItemsSource="{Binding Items}"
+            ItemTapped="Handle_MenuItemTapped"
+            CachingStrategy="RecycleElement">
+
+                <!--Built in Cells-->
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="10,15,0,0">
+                                <Label Margin="10,0,0,0" Text="{Binding Title}"  />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+
+            </ListView>
+            <Button x:Name="DisconnectButton" IsVisible="False" HorizontalOptions="Center" Text="DISCONNECT" Clicked="ButtonDisconnect_Clicked"/>
+
+            <StackLayout IsVisible="False" x:Name="WaitingStack" HorizontalOptions="Center" VerticalOptions="Center" Margin="30,0,30,320">
+                <Label Text="Logging in to Game... Please wait" FontSize="30"/>
+            </StackLayout>
+            <StackLayout IsEnabled="False" IsVisible="False" x:Name="PopupRegister" BackgroundColor="LightBlue" Margin="30,0,30,320" VerticalOptions="CenterAndExpand">
+                <Button Clicked="ButtonLoginWithSaved" Text="Login with saved number" HorizontalOptions="Center"/>
+                <Label TextColor="Black" FontSize="20" FontAttributes="Bold" Text="Please enter your phone number: "/>
+                <StackLayout Orientation="Horizontal">
+                    <Label TextColor="Black" FontSize="15" Margin="0,15,0,0" Text="+123" x:Name="CountryNumber"/>
+                    <Entry PlaceholderColor="Gray" TextColor="Black" x:Name="PhoneEntry"  HorizontalOptions="FillAndExpand" Placeholder="Phone number"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Button HorizontalOptions="Start" WidthRequest="120" Text="OK" Clicked="ButtonOk_Clicked"/>
+                </StackLayout>
+            </StackLayout>
+        </StackLayout> 
+    </ContentPage>
+    
+    
+    
+    
+    <ContentPage Title="Contacts" x:Name="ContactsTab">
+        <ContentPage.ToolbarItems>
+            <ToolbarItem Name="Refresh" Activated="Refresh_Activated" Order="Primary" Priority="0"/>
+        </ContentPage.ToolbarItems>
+        <StackLayout>
+            <Label Text="Contacts" FontSize="20"/>
+            <ListView x:Name="HomeListView" HasUnevenRows="True" ItemTapped="Handle_ItemTapped">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ContentView Padding="10">
+                                <StackLayout Orientation="Horizontal">
+
+                                    <StackLayout HorizontalOptions="StartAndExpand">
+                                        <Label HorizontalOptions="Start" Margin="30,0,0,0" FontSize="20" TextColor="Black"  Text="{Binding Name}"/>
+                                        <Label HorizontalOptions="Start" Margin="30,0,0,0" FontSize="20" TextColor="Black"  Text="{Binding Number}"/>
+                                        <Label HorizontalOptions="Start" Margin="30,0,0,0" FontSize="20" TextColor="Black"  Text="{Binding PlayingState}"/>
+
+                                    </StackLayout>
+                                    <Button Clicked="DuelClicked"  Text="Duel" HorizontalOptions="End" WidthRequest="100"/>
+                                </StackLayout>
+                            </ContentView>
+                            <!--
+                            <ViewCell.ContextActions>
+                                <MenuItem Text="Go" Clicked="MenuGoToPage"/>
+                                <MenuItem Text="Delete" Clicked="DeletePage"/>
+                            </ViewCell.ContextActions>
+                            -->
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage>
+</TabbedPage>

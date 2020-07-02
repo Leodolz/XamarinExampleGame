@@ -46,12 +46,7 @@
                                  BackgroundColor="White"   
                                  IsVisible="{Binding ShowScrollTap, Mode=TwoWay}">
                 <StackLayout Spacing="1">
-                    <Label Text="{Binding PendingMessageCount, Mode=TwoWay}"
-                              HorizontalOptions="Center"
-                           HeightRequest="10"
-                              IsVisible="True"
-                              VerticalTextAlignment="Center"
-                              TextColor="{DynamicResource primary}"/>
+
                     <Image Source="scrolldown.png"
                                WidthRequest="30"
                                HeightRequest="30"

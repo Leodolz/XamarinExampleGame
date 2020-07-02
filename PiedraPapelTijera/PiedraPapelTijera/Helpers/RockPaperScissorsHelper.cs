@@ -15,7 +15,7 @@ namespace PiedraPapelTijera.Helpers
         public string GenerateItem()
         {
             Random r = new Random();
-            int itemId = r.Next(1, 3);
+            int itemId = r.Next(1, 4);
             return rockPaperScissorsDict[itemId];
         }
         public int CalculateResult(string userItem, string pcItem)

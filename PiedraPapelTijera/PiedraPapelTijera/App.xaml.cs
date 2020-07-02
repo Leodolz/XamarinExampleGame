@@ -10,8 +10,8 @@ namespace PiedraPapelTijera
         public App()
         {
             InitializeComponent();
-
-            MainPage = new NavigationPage( new MainMenuPage());
+            //MainPage = new NavigationPage( new MainMenuPage());
+            MainPage = new NavigationPage(new MainTabbedMenu());
         }
 
         protected override void OnStart()
@@ -21,11 +21,13 @@ namespace PiedraPapelTijera
 
         protected override void OnSleep()
         {
-            // Handle when your app sleeps
+          
         }
         protected override void OnResume()
         {
             // Handle when your app resumes
         }
+       
+        
     }
 }

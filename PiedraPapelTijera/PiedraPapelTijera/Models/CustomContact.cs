@@ -8,14 +8,21 @@ namespace PiedraPapelTijera.Models
 {
     public class CustomContact: Plugin.ContactService.Shared.Contact
     {
-        public CustomContact(Plugin.ContactService.Shared.Contact contact, bool playing, ICommand TapCommand)
+        public CustomContact(Plugin.ContactService.Shared.Contact contact, string playingState, ICommand TapCommand)
         {
             Name = contact.Name;
-            Number = contact.Number!=null?contact.Number.StartsWith("+")?contact.Number:Globals.PhoneCountryCode.PhoneGlobal+contact.Number:"";
-            Playing = playing;
+            if (contact.Number != null)
+            {
+                if (contact.Number.Contains("+"))
+                    Number = contact.Number.Trim().Replace(" ","");
+                else Number = (Globals.PhoneCountryCode.PhoneGlobal + contact.Number).Trim().Replace(" ", "");
+            }
+            else Number = "";
+            //Number = contact.Number!=null?contact.Number.StartsWith("+")?contact.Number:Globals.PhoneCountryCode.PhoneGlobal+contact.Number:"";
+            PlayingState = playingState;
             this.TapCommand = TapCommand;
         }
-        public bool Playing { get; set; }
+        public string PlayingState { get; set; }
         public ICommand TapCommand { get; set; } 
     }
 }
